@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2>Название поста: {{ post.title }}</h2>
+    <p>Описание: {{ post.content }}</p>
+    <h2>Отзывы:</h2>
+    {% for comment in post.comments.all %}
+    <div class="comment" >
+        <p>
+            Автор: {{comment.author}}<br/>
+            Отзыв: {{comment.content}}<br/>
+            Дата и время создания: {{comment.date_created}}<br/>
+            <a href="{% url 'delete_comment' comment.pk %}">Удалить отзыв</a>
+        </p>
+    </div>
+    {% empty %}
+        <p>Комментариев пока нет.</p>
+    {% endfor %}
+
+    <a href="{% url 'add_comment' post.id %}">Добавить отзыв</a>
+    <a href="{% url 'post_delete' pk=post.pk %}">Удалить пост</a>
+    <a href="{% url 'list' %}">Главная страница</a>
+{% endblock %}
